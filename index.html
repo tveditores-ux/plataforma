@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GracIA - Despliega con IA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #7B68EE;
+            --secondary-color: #2C3E50;
+            --light-color: #FFFFFF;
+            --gray-color: #F8F9FA;
+            --text-color: #2C3E50;
+            --success-color: #27ae60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--gray-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(123, 104, 238, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #7B68EE 0%, #9B59B6 100%);
+            color: var(--light-color);
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .primary-btn {
+            background: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        /* Upload Section */
+        .file-upload {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+        
+        .upload-container {
+            background-color: var(--gray-color);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 10px;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            background-color: rgba(123, 104, 238, 0.05);
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .file-list {
+            margin-top: 30px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .deploy-btn {
+            background-color: var(--success-color);
+            color: var(--light-color);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .deploy-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        
+        /* Results Section */
+        .deploy-link-section {
+            padding: 60px 0;
+            background-color: var(--gray-color);
+            display: none;
+        }
+        
+        .deploy-link-container {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .site-url {
+            background-color: var(--gray-color);
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 20px 0;
+            display: inline-block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .hero {
+                padding: 120px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><i class="fas fa-brain"></i>GracIA</a>
+                <button class="primary-btn">Iniciar Sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Despliega con Inteligencia Artificial</h1>
+            <p>La plataforma que combina despliegue instantáneo con IA para optimizar tu sitio automáticamente</p>
+            <button class="primary-btn" id="startDeployBtn">Comenzar ahora</button>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="file-upload" id="uploadSection">
+        <div class="container">
+            <div class="upload-container">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Arrastra tus archivos aquí</h3>
+                    <p>o haz clic para seleccionar archivos</p>
+                    <input type="file" id="fileInput" class="file-input" multiple>
+                    <button class="upload-btn" id="browseBtn"><i class="fas fa-folder-open"></i> Examinar archivos</button>
+                </div>
+                
+                <div class="file-list" id="fileList"></div>
+                
+                <div style="text-align: center;">
+                    <button class="deploy-btn" id="deployBtn"><i class="fas fa-brain"></i> Desplegar con IA</button>
+                    <div class="deploy-status" id="deployStatus"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="deploy-link-section" id="deployLinkSection">
+        <div class="container">
+            <div class="deploy-link-container">
+                <div style="font-size: 4rem; color: var(--success-color); margin-bottom: 20px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>¡Tu sitio ha sido desplegado!</h2>
+                <p>Optimizado con inteligencia artificial y listo para el mundo</p>
+                
+                <div class="site-url" id="siteUrl">https://mi-sitio.gracia.ai</div>
+                <br>
+                <button class="primary-btn" id="visitSiteBtn"><i class="fas fa-external-link-alt"></i> Visitar sitio</button>
+                <br><br>
+                <button class="upload-btn" id="deployAnotherBtn"><i class="fas fa-plus"></i> Desplegar otro sitio</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const deployBtn = document.getElementById('deployBtn');
+            const deployStatus = document.getElementById('deployStatus');
+            const startDeployBtn = document.getElementById('startDeployBtn');
+            const uploadSection = document.getElementById('uploadSection');
+            const deployLinkSection = document.getElementById('deployLinkSection');
+            const siteUrl = document.getElementById('siteUrl');
+            const visitSiteBtn = document.getElementById('visitSiteBtn');
+            const deployAnotherBtn = document.getElementById('deployAnotherBtn');
+            
+            let uploadedFiles = [];
+            
+            // Scroll to upload section
+            startDeployBtn.addEventListener('click', function() {
+                uploadSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // File upload handlers
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function(e) {
+                handleFiles(e.target.files);
+            });
+            
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--success-color)';
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.style.borderColor = 'var(--primary-color)';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--primary-color)';
+                if (e.dataTransfer.files.length) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+            
+            function handleFiles(files) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (!uploadedFiles.some(f => f.name === file.name)) {
+                        uploadedFiles.push(file);
+                        addFileToList(file);
+                    }
+                }
+                updateDeployButton();
+            }
+            
+            function addFileToList(file) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div>
+                        <i class="fas fa-file" style="color: var(--primary-color); margin-right: 10px;"></i>
+                        ${file.name} (${formatFileSize(file.size)})
+                    </div>
+                    <button onclick="this.parentElement.remove(); uploadedFiles = uploadedFiles.filter(f => f.name !== '${file.name}'); updateDeployButton();">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                fileList.appendChild(fileItem);
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            function updateDeployButton() {
+                deployBtn.disabled = uploadedFiles.length === 0;
+                deployBtn.style.opacity = uploadedFiles.length > 0 ? '1' : '0.6';
+            }
+            
+            // Deploy function
+            deployBtn.addEventListener('click', function() {
+                const hasHTML = uploadedFiles.some(file => file.name.toLowerCase().endsWith('.html'));
+                if (!hasHTML) {
+                    showDeployStatus('Necesitas al menos un archivo HTML para desplegar.', 'error');
+                    return;
+                }
+                
+                deployBtn.disabled = true;
+                showDeployStatus('La IA está analizando y optimizando tu sitio...', 'info');
+                
+                setTimeout(() => {
+                    const siteId = generateSiteId();
+                    const siteUrlValue = `${window.location.origin}?view=${siteId}`;
+                    
+                    // Save site data
+                    const siteData = {
+                        id: siteId,
+                        files: uploadedFiles,
+                        createdAt: new Date().toISOString()
+                    };
+                    localStorage.setItem(`site-${siteId}`, JSON.stringify(siteData));
+                    
+                    showDeployStatus('¡Sitio optimizado y desplegado con éxito!', 'success');
+                    siteUrl.textContent = siteUrlValue;
+                    
+                    visitSiteBtn.onclick = function() {
+                        window.open(siteUrlValue, '_blank');
+                    };
+                    
+                    setTimeout(() => {
+                        deployLinkSection.style.display = 'block';
+                        deployLinkSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+                }, 3000);
+            });
+            
+            function showDeployStatus(message, type) {
+                deployStatus.textContent = message;
+                deployStatus.className = 'deploy-status';
+                if (type === 'success') deployStatus.classList.add('status-success');
+                deployStatus.style.display = 'block';
+            }
+            
+            function generateSiteId() {
+                return Math.random().toString(36).substring(2, 10);
+            }
+            
+            // Deploy another site
+            deployAnotherBtn.addEventListener('click', function() {
+                uploadedFiles = [];
+                fileList.innerHTML = '';
+                deployStatus.style.display = 'none';
+                deployBtn.disabled = false;
+                deployLinkSection.style.display = 'none';
+                uploadSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Handle URL parameters for site viewing
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewSiteId = urlParams.get('view');
+            if (viewSiteId) {
+                const siteData = JSON.parse(localStorage.getItem(`site-${viewSiteId}`));
+                if (siteData) {
+                    // Here you would display the site
+                    document.body.innerHTML = '<h1>Sitio desplegado con GracIA</h1><p>Esta funcionalidad requiere más desarrollo.</p>';
+                }
+            }
+            
+            updateDeployButton();
+        });
+    </script>
+</body>
+</html>

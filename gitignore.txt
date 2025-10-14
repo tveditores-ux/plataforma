@@ -1,0 +1,26 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos de IDE
+.vscode/
+.idea/
+
+# Dependencias
+node_modules/
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Archivos de build
+/dist
+/build
