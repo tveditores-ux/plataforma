@@ -6,9 +6,211 @@
     <title>GracIA - Despliega con IA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* [MANTENER TODOS LOS ESTILOS ANTERIORES] */
+        :root {
+            --primary-color: #7B68EE;
+            --secondary-color: #2C3E50;
+            --light-color: #FFFFFF;
+            --gray-color: #F8F9FA;
+            --text-color: #2C3E50;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+        }
         
-        /* Agregar estos estilos NUEVOS para el visor */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--gray-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background-color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(123, 104, 238, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #7B68EE 0%, #9B59B6 100%);
+            color: var(--light-color);
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .primary-btn {
+            background: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .file-upload {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+        
+        .upload-container {
+            background-color: var(--gray-color);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 10px;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            background-color: rgba(123, 104, 238, 0.05);
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .file-list {
+            margin-top: 30px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .deploy-btn {
+            background-color: var(--success-color);
+            color: var(--light-color);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .deploy-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .deploy-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        
+        .deploy-link-section {
+            padding: 60px 0;
+            background-color: var(--gray-color);
+            display: none;
+        }
+        
+        .deploy-link-container {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .site-url {
+            background-color: var(--gray-color);
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 20px 0;
+            display: inline-block;
+        }
+        
+        /* Visor de sitios */
         .site-viewer {
             display: none;
             position: fixed;
@@ -39,26 +241,73 @@
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        
-        .close-viewer:hover {
-            background: rgba(255,255,255,0.2);
         }
     </style>
 </head>
 <body>
-    <!-- [MANTENER TODO EL HTML ANTERIOR] -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><i class="fas fa-brain"></i>GracIA</a>
+                <button class="primary-btn" id="loginBtn">Iniciar Sesión</button>
+            </nav>
+        </div>
+    </header>
 
-    <!-- AGREGAR ESTE NUEVO ELEMENTO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Despliega con Inteligencia Artificial</h1>
+            <p>Sube tu HTML y prévisualo instantáneamente</p>
+            <button class="primary-btn" id="startDeployBtn">Comenzar ahora</button>
+        </div>
+    </section>
+
+    <section class="file-upload" id="uploadSection">
+        <div class="container">
+            <div class="upload-container">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Arrastra tu archivo HTML aquí</h3>
+                    <p>o haz clic para seleccionar</p>
+                    <input type="file" id="fileInput" class="file-input" accept=".html">
+                    <button class="upload-btn" id="browseBtn"><i class="fas fa-folder-open"></i> Seleccionar HTML</button>
+                </div>
+                
+                <div class="file-list" id="fileList"></div>
+                
+                <div style="text-align: center;">
+                    <button class="deploy-btn" id="deployBtn" disabled><i class="fas fa-eye"></i> Previsualizar Sitio</button>
+                    <div class="deploy-status" id="deployStatus"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="deploy-link-section" id="deployLinkSection">
+        <div class="container">
+            <div class="deploy-link-container">
+                <div style="font-size: 4rem; color: var(--success-color); margin-bottom: 20px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>¡Tu sitio está listo!</h2>
+                <p>Haz clic para ver la previsualización</p>
+                <button class="primary-btn" id="visitSiteBtn" style="background: var(--success-color); color: white;">
+                    <i class="fas fa-external-link-alt"></i> Ver Previsualización
+                </button>
+                <br><br>
+                <button class="upload-btn" id="deployAnotherBtn"><i class="fas fa-plus"></i> Subir otro archivo</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visor de sitios -->
     <div class="site-viewer" id="siteViewer">
         <div class="viewer-header">
             <div>
-                <strong>🚀 Sitio desplegado con GracIA</strong>
-                <div style="font-size: 0.9rem; opacity: 0.9;" id="siteInfo"></div>
+                <strong>🚀 Vista Previa - GracIA</strong>
+                <div style="font-size: 0.9rem;">Tu sitio HTML en acción</div>
             </div>
             <button class="close-viewer" id="closeViewer">
                 <i class="fas fa-times"></i> Cerrar
@@ -69,217 +318,203 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // [MANTENER TODO EL CÓDIGO JS ANTERIOR...]
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const deployBtn = document.getElementById('deployBtn');
+            const deployStatus = document.getElementById('deployStatus');
+            const startDeployBtn = document.getElementById('startDeployBtn');
+            const uploadSection = document.getElementById('uploadSection');
+            const deployLinkSection = document.getElementById('deployLinkSection');
+            const visitSiteBtn = document.getElementById('visitSiteBtn');
+            const deployAnotherBtn = document.getElementById('deployAnotherBtn');
             
-            // AGREGAR ESTAS NUEVAS VARIABLES
+            // Elementos del visor
             const siteViewer = document.getElementById('siteViewer');
             const viewerIframe = document.getElementById('viewerIframe');
             const closeViewer = document.getElementById('closeViewer');
-            const siteInfo = document.getElementById('siteInfo');
+            
+            let currentHtmlContent = '';
+            let currentFileName = '';
 
-            // MODIFICAR LA FUNCIÓN DE DESPLIEGUE - PARTE CLAVE
-            deployBtn.addEventListener('click', async function() {
-                const hasHTML = uploadedFiles.some(file => file.name.toLowerCase().endsWith('.html'));
-                
-                if (!hasHTML) {
-                    showDeployStatus('Para desplegar un sitio web, necesitas al menos un archivo HTML.', 'error');
-                    return;
-                }
-                
-                showDeployStatus('Iniciando análisis con IA...', 'info');
-                deployBtn.disabled = true;
-                loading.style.display = 'block';
-                
-                try {
-                    // Leer el contenido del archivo HTML
-                    const htmlFile = uploadedFiles.find(f => f.name.toLowerCase().endsWith('.html'));
-                    const htmlContent = await readFileAsText(htmlFile);
-                    
-                    // Simular proceso de IA
-                    setTimeout(() => showDeployStatus('IA optimizando recursos...', 'info'), 1000);
-                    setTimeout(() => showDeployStatus('Aplicando mejoras de seguridad...', 'info'), 2000);
-                    setTimeout(() => showDeployStatus('Preparando despliegue...', 'info'), 3000);
-                    
-                    setTimeout(() => {
-                        // Generar ID único
-                        const siteId = generateSiteId();
-                        const siteName = getSiteName(uploadedFiles);
-                        
-                        // Guardar el sitio
-                        const siteData = {
-                            id: siteId,
-                            name: siteName,
-                            htmlContent: htmlContent,
-                            files: uploadedFiles.map(f => ({ 
-                                name: f.name, 
-                                size: f.size, 
-                                type: f.type 
-                            })),
-                            createdAt: new Date().toISOString()
-                        };
-                        
-                        localStorage.setItem(`gracia-site-${siteId}`, JSON.stringify(siteData));
-                        
-                        // Generar link que FUNCIONE
-                        const siteUrlValue = `${window.location.origin}${window.location.pathname}?view=${siteId}`;
-                        
-                        // Mostrar éxito
-                        showDeployStatus('¡Sitio optimizado y desplegado con éxito!', 'success');
-                        siteUrl.textContent = siteUrlValue;
-                        
-                        // CONFIGURAR BOTÓN DE VISITA PARA QUE SÍ FUNCIONE
-                        visitSiteBtn.onclick = function(e) {
-                            e.preventDefault();
-                            openSiteViewer(siteId, siteData);
-                        };
-                        
-                        // Mostrar resultados
-                        setTimeout(() => {
-                            loading.style.display = 'none';
-                            deployLinkSection.style.display = 'block';
-                            deployLinkSection.scrollIntoView({ behavior: 'smooth' });
-                        }, 1000);
-                        
-                    }, 4000);
-                    
-                } catch (error) {
-                    showDeployStatus('Error: ' + error.message, 'error');
-                    loading.style.display = 'none';
-                    deployBtn.disabled = false;
+            // Scroll to upload
+            startDeployBtn.addEventListener('click', function() {
+                uploadSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // File selection
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
                 }
             });
 
-            // NUEVA FUNCIÓN PARA LEER ARCHIVOS COMO TEXTO
-            function readFileAsText(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = e => resolve(e.target.result);
-                    reader.onerror = e => reject(e);
-                    reader.readAsText(file);
-                });
+            // Drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--success-color)';
+            });
+
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.style.borderColor = 'var(--primary-color)';
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--primary-color)';
+                if (e.dataTransfer.files.length > 0) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            function handleFile(file) {
+                if (file.type !== 'text/html' && !file.name.toLowerCase().endsWith('.html')) {
+                    showDeployStatus('Por favor, sube solo archivos HTML (.html)', 'error');
+                    return;
+                }
+
+                currentFileName = file.name;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentHtmlContent = e.target.result;
+                    
+                    // Mostrar archivo en la lista
+                    fileList.innerHTML = `
+                        <div class="file-item">
+                            <div>
+                                <i class="fas fa-file-code" style="color: var(--primary-color); margin-right: 10px;"></i>
+                                ${file.name} (${formatFileSize(file.size)})
+                            </div>
+                            <button onclick="clearFile()">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    deployBtn.disabled = false;
+                    deployStatus.style.display = 'none';
+                };
+                reader.readAsText(file);
             }
 
-            // NUEVA FUNCIÓN PARA ABRIR EL VISOR DE SITIOS
-            function openSiteViewer(siteId, siteData) {
-                if (siteData && siteData.htmlContent) {
-                    // Crear un HTML completo
+            function clearFile() {
+                fileList.innerHTML = '';
+                fileInput.value = '';
+                currentHtmlContent = '';
+                currentFileName = '';
+                deployBtn.disabled = true;
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            // Deploy/Preview
+            deployBtn.addEventListener('click', function() {
+                if (!currentHtmlContent) {
+                    showDeployStatus('No hay archivo HTML para previsualizar', 'error');
+                    return;
+                }
+
+                deployBtn.disabled = true;
+                showDeployStatus('Generando previsualización...', 'info');
+
+                setTimeout(() => {
+                    showDeployStatus('¡Previsualización lista!', 'success');
+                    
+                    setTimeout(() => {
+                        deployLinkSection.style.display = 'block';
+                        deployLinkSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 500);
+                }, 1000);
+            });
+
+            // Ver previsualización
+            visitSiteBtn.addEventListener('click', function() {
+                if (currentHtmlContent) {
+                    // Crear HTML completo con banner de GracIA
                     const fullHtml = `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${siteData.name} - Desplegado con GracIA</title>
+    <title>${currentFileName} - GracIA Preview</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
         .gracia-banner {
-            background: rgba(0,0,0,0.8);
+            background: linear-gradient(135deg, #7B68EE, #9B59B6);
             color: white;
-            padding: 15px;
-            text-align: center;
+            padding: 15px 20px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .gracia-banner a {
-            color: #7B68EE;
+            color: white;
             text-decoration: none;
-            margin-left: 10px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
-        .content {
-            padding: 80px 20px 20px 20px;
-            max-width: 800px;
-            margin: 0 auto;
+        body {
+            margin-top: 60px;
         }
     </style>
 </head>
 <body>
     <div class="gracia-banner">
-        🚀 Desplegado con <strong>GracIA</strong> 
-        <a href="${window.location.origin}">Crear tu propio sitio</a>
+        <div>
+            <strong>🚀 GracIA Preview</strong>
+            <span style="font-size: 0.9rem; opacity: 0.9;"> - ${currentFileName}</span>
+        </div>
+        <a href="javascript:window.close()">Cerrar Vista Previa</a>
     </div>
-    <div class="content">
-        ${siteData.htmlContent}
-    </div>
+    ${currentHtmlContent}
 </body>
 </html>`;
-                    
-                    // Crear blob y mostrar en el visor
+
                     const blob = new Blob([fullHtml], { type: 'text/html' });
                     const url = URL.createObjectURL(blob);
                     
-                    viewerIframe.src = url;
-                    siteInfo.textContent = `Sitio: ${siteData.name} | Desplegado: ${new Date().toLocaleDateString()}`;
-                    siteViewer.style.display = 'block';
-                    
-                    // Prevenir scroll del body principal
-                    document.body.style.overflow = 'hidden';
+                    // Abrir en nueva pestaña
+                    window.open(url, '_blank');
                 }
-            }
-
-            // FUNCIÓN PARA CERRAR EL VISOR
-            closeViewer.addEventListener('click', function() {
-                siteViewer.style.display = 'none';
-                viewerIframe.src = 'about:blank';
-                document.body.style.overflow = 'auto';
             });
 
-            // FUNCIÓN MEJORADA PARA MANEJAR PARÁMETROS URL
-            function handleUrlParameters() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const viewSiteId = urlParams.get('view');
-                
-                if (viewSiteId) {
-                    const siteData = JSON.parse(localStorage.getItem(`gracia-site-${viewSiteId}`));
-                    if (siteData) {
-                        // Mostrar el sitio directamente
-                        document.body.innerHTML = `
-                            <div style="padding: 20px; font-family: Arial, sans-serif;">
-                                <div style="background: #7B68EE; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                                    <h1>🚀 ${siteData.name}</h1>
-                                    <p>Este sitio fue desplegado con GracIA</p>
-                                </div>
-                                <div style="background: white; padding: 20px; border-radius: 10px; color: #333;">
-                                    ${siteData.htmlContent || '<p>Contenido del sitio aparecerá aquí</p>'}
-                                </div>
-                                <div style="margin-top: 20px; text-align: center;">
-                                    <a href="${window.location.origin}" style="color: #7B68EE; text-decoration: none;">
-                                        ← Crear tu propio sitio con GracIA
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                        return true;
-                    } else {
-                        document.body.innerHTML = `
-                            <div style="padding: 50px; text-align: center; font-family: Arial, sans-serif;">
-                                <h1>❌ Sitio no encontrado</h1>
-                                <p>El sitio que buscas ha expirado o no existe.</p>
-                                <a href="${window.location.origin}" style="color: #7B68EE;">
-                                    Volver a GracIA
-                                </a>
-                            </div>
-                        `;
-                        return true;
-                    }
-                }
-                return false;
+            // Deploy another
+            deployAnotherBtn.addEventListener('click', function() {
+                clearFile();
+                deployStatus.style.display = 'none';
+                deployLinkSection.style.display = 'none';
+                uploadSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            function showDeployStatus(message, type) {
+                deployStatus.textContent = message;
+                deployStatus.className = 'deploy-status';
+                if (type === 'success') deployStatus.classList.add('status-success');
+                deployStatus.style.display = 'block';
             }
 
-            // [MANTENER EL RESTO DEL CÓDIGO...]
-
-            // Verificar parámetros URL al cargar
-            if (handleUrlParameters()) {
-                return; // Si mostramos un sitio, detener ejecución normal
-            }
+            // Hacer clearFile disponible globalmente
+            window.clearFile = clearFile;
         });
     </script>
 </body>
