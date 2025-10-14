@@ -13,6 +13,7 @@
             --gray-color: #F8F9FA;
             --text-color: #2C3E50;
             --success-color: #27ae60;
+            --error-color: #e74c3c;
         }
         
         * {
@@ -35,7 +36,6 @@
             padding: 0 15px;
         }
         
-        /* Header */
         header {
             background-color: var(--light-color);
             box-shadow: 0 2px 10px rgba(123, 104, 238, 0.1);
@@ -65,7 +65,6 @@
             margin-right: 10px;
         }
         
-        /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #7B68EE 0%, #9B59B6 100%);
             color: var(--light-color);
@@ -94,9 +93,14 @@
             font-weight: 600;
             cursor: pointer;
             margin: 10px;
+            transition: all 0.3s;
         }
         
-        /* Upload Section */
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
         .file-upload {
             padding: 100px 0;
             background-color: var(--light-color);
@@ -108,6 +112,7 @@
             padding: 40px;
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .upload-area {
@@ -118,6 +123,12 @@
             margin-bottom: 30px;
             cursor: pointer;
             background-color: rgba(123, 104, 238, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-color: #6A5ACD;
         }
         
         .upload-area i {
@@ -138,6 +149,12 @@
             border-radius: 5px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-btn:hover {
+            background-color: #6A5ACD;
+            transform: translateY(-2px);
         }
         
         .file-list {
@@ -152,6 +169,44 @@
             background-color: var(--light-color);
             border-radius: 5px;
             margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-icon {
+            color: var(--primary-color);
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary-color);
+            background: rgba(123, 104, 238, 0.1);
+        }
+        
+        .deploy-section {
+            margin-top: 30px;
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
         }
         
         .deploy-btn {
@@ -163,7 +218,22 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .deploy-btn:hover:not(:disabled) {
+            background-color: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 83, 0.3);
+        }
+        
+        .deploy-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
         
         .deploy-status {
@@ -179,10 +249,43 @@
             border: 1px solid var(--success-color);
         }
         
-        /* Results Section */
+        .status-error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+        
+        .status-info {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .deploy-link-section {
             padding: 60px 0;
-            background-color: var(--gray-color);
+            background: linear-gradient(135deg, #7B68EE 0%, #9B59B6 100%);
+            color: var(--light-color);
             display: none;
         }
         
@@ -193,18 +296,80 @@
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
+            color: var(--text-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+        
+        .site-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
         }
         
         .site-url {
             background-color: var(--gray-color);
             padding: 12px 20px;
             border-radius: 5px;
-            font-family: monospace;
-            margin: 20px 0;
-            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            border: 1px solid #ddd;
+            flex-grow: 1;
+            max-width: 500px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         
-        /* Responsive */
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #6A5ACD;
+        }
+        
+        .visit-btn {
+            background-color: var(--success-color);
+            color: var(--light-color);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .visit-btn:hover {
+            background-color: #219653;
+        }
+        
+        .link-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
@@ -218,21 +383,27 @@
             .hero h1 {
                 font-size: 2rem;
             }
+            
+            .site-link {
+                flex-direction: column;
+            }
+            
+            .site-url {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo"><i class="fas fa-brain"></i>GracIA</a>
-                <button class="primary-btn">Iniciar Sesión</button>
+                <button class="primary-btn" id="loginBtn">Iniciar Sesión</button>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>Despliega con Inteligencia Artificial</h1>
@@ -241,7 +412,6 @@
         </div>
     </section>
 
-    <!-- Upload Section -->
     <section class="file-upload" id="uploadSection">
         <div class="container">
             <div class="upload-container">
@@ -255,7 +425,12 @@
                 
                 <div class="file-list" id="fileList"></div>
                 
-                <div style="text-align: center;">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>La IA está analizando y optimizando tu sitio...</p>
+                </div>
+                
+                <div class="deploy-section">
                     <button class="deploy-btn" id="deployBtn"><i class="fas fa-brain"></i> Desplegar con IA</button>
                     <div class="deploy-status" id="deployStatus"></div>
                 </div>
@@ -263,38 +438,49 @@
         </div>
     </section>
 
-    <!-- Results Section -->
     <section class="deploy-link-section" id="deployLinkSection">
         <div class="container">
             <div class="deploy-link-container">
-                <div style="font-size: 4rem; color: var(--success-color); margin-bottom: 20px;">
+                <div class="success-icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <h2>¡Tu sitio ha sido desplegado!</h2>
-                <p>Optimizado con inteligencia artificial y listo para el mundo</p>
+                <h2>¡Tu sitio ha sido optimizado y desplegado!</h2>
+                <p>La IA ha analizado y mejorado tu sitio automáticamente</p>
                 
-                <div class="site-url" id="siteUrl">https://mi-sitio.gracia.ai</div>
-                <br>
-                <button class="primary-btn" id="visitSiteBtn"><i class="fas fa-external-link-alt"></i> Visitar sitio</button>
-                <br><br>
-                <button class="upload-btn" id="deployAnotherBtn"><i class="fas fa-plus"></i> Desplegar otro sitio</button>
+                <div class="site-link">
+                    <div class="site-url" id="siteUrl">https://mi-sitio-optimizado.gracia.ai</div>
+                    <button class="copy-btn" id="copyUrlBtn"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                
+                <a href="#" class="visit-btn" id="visitSiteBtn" target="_blank"><i class="fas fa-external-link-alt"></i> Visitar sitio</a>
+                
+                <div class="link-actions">
+                    <button class="primary-btn" id="deployAnotherBtn"><i class="fas fa-plus"></i> Desplegar otro sitio</button>
+                    <button class="upload-btn" id="viewAnalyticsBtn"><i class="fas fa-chart-bar"></i> Ver análisis IA</button>
+                </div>
             </div>
         </div>
     </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM
             const uploadArea = document.getElementById('uploadArea');
             const fileInput = document.getElementById('fileInput');
+            const browseBtn = document.getElementById('browseBtn');
             const fileList = document.getElementById('fileList');
             const deployBtn = document.getElementById('deployBtn');
             const deployStatus = document.getElementById('deployStatus');
+            const loading = document.getElementById('loading');
             const startDeployBtn = document.getElementById('startDeployBtn');
             const uploadSection = document.getElementById('uploadSection');
             const deployLinkSection = document.getElementById('deployLinkSection');
             const siteUrl = document.getElementById('siteUrl');
+            const copyUrlBtn = document.getElementById('copyUrlBtn');
             const visitSiteBtn = document.getElementById('visitSiteBtn');
             const deployAnotherBtn = document.getElementById('deployAnotherBtn');
+            const viewAnalyticsBtn = document.getElementById('viewAnalyticsBtn');
+            const loginBtn = document.getElementById('loginBtn');
             
             let uploadedFiles = [];
             
@@ -303,140 +489,308 @@
                 uploadSection.scrollIntoView({ behavior: 'smooth' });
             });
             
-            // File upload handlers
+            // File selection
             uploadArea.addEventListener('click', function() {
                 fileInput.click();
             });
             
+            browseBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                fileInput.click();
+            });
+            
+            // File input change
             fileInput.addEventListener('change', function(e) {
                 handleFiles(e.target.files);
             });
             
+            // Drag and drop
             uploadArea.addEventListener('dragover', function(e) {
                 e.preventDefault();
                 uploadArea.style.borderColor = 'var(--success-color)';
+                uploadArea.style.backgroundColor = 'rgba(39, 174, 96, 0.1)';
             });
             
             uploadArea.addEventListener('dragleave', function() {
                 uploadArea.style.borderColor = 'var(--primary-color)';
+                uploadArea.style.backgroundColor = 'rgba(123, 104, 238, 0.05)';
             });
             
             uploadArea.addEventListener('drop', function(e) {
                 e.preventDefault();
                 uploadArea.style.borderColor = 'var(--primary-color)';
+                uploadArea.style.backgroundColor = 'rgba(123, 104, 238, 0.05)';
+                
                 if (e.dataTransfer.files.length) {
                     handleFiles(e.dataTransfer.files);
                 }
             });
             
+            // Handle uploaded files
             function handleFiles(files) {
                 for (let i = 0; i < files.length; i++) {
                     const file = files[i];
-                    if (!uploadedFiles.some(f => f.name === file.name)) {
-                        uploadedFiles.push(file);
-                        addFileToList(file);
+                    
+                    // Check if file already exists
+                    if (uploadedFiles.some(f => f.name === file.name)) {
+                        continue;
                     }
+                    
+                    uploadedFiles.push(file);
+                    addFileToList(file);
                 }
+                
                 updateDeployButton();
             }
             
+            // Add file to list
             function addFileToList(file) {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <div>
-                        <i class="fas fa-file" style="color: var(--primary-color); margin-right: 10px;"></i>
-                        ${file.name} (${formatFileSize(file.size)})
-                    </div>
-                    <button onclick="this.parentElement.remove(); uploadedFiles = uploadedFiles.filter(f => f.name !== '${file.name}'); updateDeployButton();">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                `;
+                
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const fileIcon = document.createElement('i');
+                fileIcon.className = 'file-icon fas ' + getFileIcon(file.name);
+                
+                const fileName = document.createElement('span');
+                fileName.textContent = file.name;
+                
+                const fileSize = document.createElement('span');
+                fileSize.textContent = formatFileSize(file.size);
+                
+                fileInfo.appendChild(fileIcon);
+                fileInfo.appendChild(fileName);
+                fileInfo.appendChild(document.createTextNode(' (' + fileSize + ')'));
+                
+                const fileActions = document.createElement('div');
+                fileActions.className = 'file-actions';
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'action-btn';
+                deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                deleteBtn.title = 'Eliminar archivo';
+                deleteBtn.addEventListener('click', function() {
+                    fileItem.remove();
+                    uploadedFiles = uploadedFiles.filter(f => f.name !== file.name);
+                    updateDeployButton();
+                });
+                
+                fileActions.appendChild(deleteBtn);
+                fileItem.appendChild(fileInfo);
+                fileItem.appendChild(fileActions);
                 fileList.appendChild(fileItem);
             }
             
+            // Get file icon based on extension
+            function getFileIcon(filename) {
+                const extension = filename.split('.').pop().toLowerCase();
+                
+                switch(extension) {
+                    case 'html': return 'fa-file-code';
+                    case 'css': return 'fa-file-code';
+                    case 'js': return 'fa-file-code';
+                    case 'png': case 'jpg': case 'jpeg': case 'gif': case 'svg': return 'fa-file-image';
+                    case 'pdf': return 'fa-file-pdf';
+                    case 'zip': case 'rar': return 'fa-file-archive';
+                    default: return 'fa-file';
+                }
+            }
+            
+            // Format file size
             function formatFileSize(bytes) {
                 if (bytes === 0) return '0 Bytes';
+                
                 const k = 1024;
                 const sizes = ['Bytes', 'KB', 'MB', 'GB'];
                 const i = Math.floor(Math.log(bytes) / Math.log(k));
+                
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             }
             
+            // Update deploy button state
             function updateDeployButton() {
-                deployBtn.disabled = uploadedFiles.length === 0;
-                deployBtn.style.opacity = uploadedFiles.length > 0 ? '1' : '0.6';
+                if (uploadedFiles.length > 0) {
+                    deployBtn.disabled = false;
+                } else {
+                    deployBtn.disabled = true;
+                }
             }
             
-            // Deploy function
+            // Deploy site
             deployBtn.addEventListener('click', function() {
+                // Check if there's an HTML file
                 const hasHTML = uploadedFiles.some(file => file.name.toLowerCase().endsWith('.html'));
+                
                 if (!hasHTML) {
-                    showDeployStatus('Necesitas al menos un archivo HTML para desplegar.', 'error');
+                    showDeployStatus('Para desplegar un sitio web, necesitas al menos un archivo HTML.', 'error');
                     return;
                 }
                 
+                // Start deployment process
+                showDeployStatus('Iniciando análisis con IA...', 'info');
                 deployBtn.disabled = true;
-                showDeployStatus('La IA está analizando y optimizando tu sitio...', 'info');
+                loading.style.display = 'block';
+                
+                // Simulate AI processing
+                setTimeout(() => {
+                    showDeployStatus('IA optimizando recursos...', 'info');
+                }, 1000);
                 
                 setTimeout(() => {
+                    showDeployStatus('Aplicando mejoras de seguridad...', 'info');
+                }, 2000);
+                
+                setTimeout(() => {
+                    showDeployStatus('Preparando despliegue...', 'info');
+                }, 3000);
+                
+                setTimeout(() => {
+                    // Generate unique site ID and URL
                     const siteId = generateSiteId();
                     const siteUrlValue = `${window.location.origin}?view=${siteId}`;
                     
-                    // Save site data
+                    // Save site data to localStorage
                     const siteData = {
                         id: siteId,
-                        files: uploadedFiles,
-                        createdAt: new Date().toISOString()
+                        files: uploadedFiles.map(f => ({ name: f.name, size: f.size, type: f.type })),
+                        createdAt: new Date().toISOString(),
+                        name: getSiteName(uploadedFiles)
                     };
-                    localStorage.setItem(`site-${siteId}`, JSON.stringify(siteData));
                     
+                    localStorage.setItem(`gracia-site-${siteId}`, JSON.stringify(siteData));
+                    
+                    // Show success
                     showDeployStatus('¡Sitio optimizado y desplegado con éxito!', 'success');
                     siteUrl.textContent = siteUrlValue;
                     
-                    visitSiteBtn.onclick = function() {
-                        window.open(siteUrlValue, '_blank');
-                    };
+                    // Configure visit button
+                    visitSiteBtn.href = siteUrlValue;
+                    visitSiteBtn.target = '_blank';
                     
+                    // Show results
                     setTimeout(() => {
+                        loading.style.display = 'none';
                         deployLinkSection.style.display = 'block';
                         deployLinkSection.scrollIntoView({ behavior: 'smooth' });
                     }, 1000);
-                }, 3000);
+                    
+                }, 4000);
             });
             
+            // Show deployment status
             function showDeployStatus(message, type) {
                 deployStatus.textContent = message;
                 deployStatus.className = 'deploy-status';
-                if (type === 'success') deployStatus.classList.add('status-success');
+                
+                if (type === 'success') {
+                    deployStatus.classList.add('status-success');
+                } else if (type === 'error') {
+                    deployStatus.classList.add('status-error');
+                } else if (type === 'info') {
+                    deployStatus.classList.add('status-info');
+                }
+                
                 deployStatus.style.display = 'block';
             }
             
+            // Generate unique site ID
             function generateSiteId() {
-                return Math.random().toString(36).substring(2, 10);
+                const adjectives = ['rapido', 'inteligente', 'optimizado', 'seguro', 'moderno', 'eficiente'];
+                const nouns = ['sitio', 'web', 'portal', 'plataforma', 'aplicacion', 'proyecto'];
+                
+                const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+                const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+                const randomNum = Math.floor(Math.random() * 1000);
+                
+                return `${randomAdjective}-${randomNoun}-${randomNum}`;
             }
+            
+            // Get site name from files
+            function getSiteName(files) {
+                const htmlFile = files.find(f => f.name.toLowerCase().endsWith('.html'));
+                return htmlFile ? htmlFile.name.replace('.html', '') : 'mi-sitio';
+            }
+            
+            // Copy URL to clipboard
+            copyUrlBtn.addEventListener('click', function() {
+                const urlToCopy = siteUrl.textContent;
+                
+                navigator.clipboard.writeText(urlToCopy).then(() => {
+                    // Show success feedback
+                    const originalText = copyUrlBtn.innerHTML;
+                    copyUrlBtn.innerHTML = '<i class="fas fa-check"></i> Copiado';
+                    copyUrlBtn.style.backgroundColor = 'var(--success-color)';
+                    
+                    setTimeout(() => {
+                        copyUrlBtn.innerHTML = originalText;
+                        copyUrlBtn.style.backgroundColor = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Error al copiar: ', err);
+                    alert('Error al copiar el enlace. Por favor, cópialo manualmente.');
+                });
+            });
             
             // Deploy another site
             deployAnotherBtn.addEventListener('click', function() {
+                // Reset form
                 uploadedFiles = [];
                 fileList.innerHTML = '';
+                fileInput.value = '';
                 deployStatus.style.display = 'none';
-                deployBtn.disabled = false;
+                deployBtn.disabled = true;
+                loading.style.display = 'none';
+                
+                // Hide results and show upload section
                 deployLinkSection.style.display = 'none';
                 uploadSection.scrollIntoView({ behavior: 'smooth' });
             });
             
+            // View analytics (simulated)
+            viewAnalyticsBtn.addEventListener('click', function() {
+                alert('Análisis de IA:\n- Código optimizado: ✓\n- Imágenes comprimidas: ✓\n- Seguridad mejorada: ✓\n- SEO optimizado: ✓');
+            });
+            
+            // Login (simulated)
+            loginBtn.addEventListener('click', function() {
+                alert('Funcionalidad de login - En una versión completa esto abriría un modal de autenticación.');
+            });
+            
             // Handle URL parameters for site viewing
-            const urlParams = new URLSearchParams(window.location.search);
-            const viewSiteId = urlParams.get('view');
-            if (viewSiteId) {
-                const siteData = JSON.parse(localStorage.getItem(`site-${viewSiteId}`));
-                if (siteData) {
-                    // Here you would display the site
-                    document.body.innerHTML = '<h1>Sitio desplegado con GracIA</h1><p>Esta funcionalidad requiere más desarrollo.</p>';
+            function handleUrlParameters() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const viewSiteId = urlParams.get('view');
+                
+                if (viewSiteId) {
+                    const siteData = JSON.parse(localStorage.getItem(`gracia-site-${viewSiteId}`));
+                    if (siteData) {
+                        // Show a simple page for the deployed site
+                        document.body.innerHTML = `
+                            <div style="padding: 50px; text-align: center; font-family: Arial, sans-serif;">
+                                <h1>🚀 ${siteData.name}</h1>
+                                <p>Este sitio fue desplegado con GracIA</p>
+                                <p><small>ID: ${siteData.id}</small></p>
+                                <div style="margin-top: 30px;">
+                                    <a href="${window.location.origin}" style="color: #7B68EE; text-decoration: none;">
+                                        ← Crear tu propio sitio con GracIA
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        return true;
+                    }
                 }
+                return false;
             }
             
+            // Check URL parameters on load
+            if (handleUrlParameters()) {
+                return;
+            }
+            
+            // Initialize
             updateDeployButton();
         });
     </script>
